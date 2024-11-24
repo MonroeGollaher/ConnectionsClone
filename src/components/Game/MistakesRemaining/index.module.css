@@ -1,0 +1,37 @@
+.mistakesRemaining {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & p {
+    margin-inline-end: 0.5rem;
+  }
+}
+
+.mistakeBubble {
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background-color: #5a594e;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  & button {
+    background-color: #fff;
+    border: 1px solid black;
+    border-radius: 32px;
+    cursor: pointer;
+    padding: 1rem;
+
+    &:disabled {
+      pointer-events: none;
+      background-color: #fff;
+      color: #7f7f7f;
+      border-color: #7f7f7f;
+    }
+  }
+}

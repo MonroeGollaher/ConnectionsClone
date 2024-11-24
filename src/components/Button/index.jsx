@@ -12,7 +12,7 @@ export const Button = ({
   return (
     <button
       className={classNames(className, styles.component)}
-      onClick={onclick}
+      onClick={onClick}
       type={type}
       disabled={disabled}
     >
