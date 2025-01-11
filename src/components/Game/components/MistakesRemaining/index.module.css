@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: #4a4a4a;
+  border-radius: 50%;
+}

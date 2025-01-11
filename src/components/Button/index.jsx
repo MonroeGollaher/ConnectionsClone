@@ -8,6 +8,7 @@ export const Button = ({
   buttonText,
   type = "button",
   disabled = false,
+  form,
 }) => {
   return (
     <button
@@ -15,6 +16,7 @@ export const Button = ({
       onClick={onClick}
       type={type}
       disabled={disabled}
+      form={form}
     >
       {buttonText}
     </button>
