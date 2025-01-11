@@ -1,5 +1,50 @@
-.container {
-  & h1 {
-    margin-block-end: 0;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f9f9f9;
+}
+
+.gameWrapper {
+  width: 80%;
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+.gameGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  justify-content: center;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+
+  & .button {
+    border: 1px solid;
+    border-radius: 2rem;
+    cursor: pointer;
+    min-width: 5.5rem;
+    padding-block: 1rem;
+    width: fit-content;
   }
 }
