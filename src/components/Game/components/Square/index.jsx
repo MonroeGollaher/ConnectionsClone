@@ -6,6 +6,7 @@ export const Square = ({ word, index, onClick, isSelected, isDisabled }) => {
   const id = `inner-card-${index}`;
 
   const handleClick = () => {
+    console.log("word")
     onClick(word);
   };
 
