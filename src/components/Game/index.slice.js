@@ -7,26 +7,26 @@ const initialState = {
     {
       groupName: "yellowGroup",
       category: "Fissure",
-      words: ["CRACK", "HOLE", "LEAK", "PUNCTURE"],
+      words: ["CRACK", "HOLE", "LEAK", "PUNCTURE"]
     },
     {
       groupName: "greenGroup",
       category: "Elements of writing",
-      words: ["LETTER", "PHRASE", "SENTENCE", "WORD"],
+      words: ["LETTER", "PHRASE", "SENTENCE", "WORD"]
     },
     {
       groupName: "blueGroup",
       category: "Instruments you blow into",
-      words: ["JUG", "PIPE", "RECORDER", "WHISTLE"],
+      words: ["JUG", "PIPE", "RECORDER", "WHISTLE"]
     },
     {
       groupName: "purpleGroup",
       category: "____ of time",
-      words: ["NICK", "PASSAGE", "SANDS", "WASTE"],
-    },
+      words: ["NICK", "PASSAGE", "SANDS", "WASTE"]
+    }
   ],
   shuffledWords: [],
-  solvedGroups: [],
+  solvedGroups: []
 };
 
 const gameSlice = createSlice({
@@ -38,17 +38,9 @@ const gameSlice = createSlice({
       if (state.mistakesRemaining === 0) {
         state.isGameOver = true;
       }
-    },
-    resetGame(state) {
-      return {
-        ...initialState,
-        shuffledWords: Object.values(initialState.words)
-          .flatMap((group) => group.words)
-          .sort(() => Math.random() - 0.5),
-      };
-    },
-  },
+    }
+  }
 });
 
-export const { decrementMistake, resetGame } = gameSlice.actions;
+export const { decrementMistake } = gameSlice.actions;
 export default gameSlice.reducer;

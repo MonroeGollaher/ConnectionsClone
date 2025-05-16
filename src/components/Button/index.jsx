@@ -8,7 +8,7 @@ export const Button = ({
   buttonText,
   type = "button",
   disabled = false,
-  form,
+  form
 }) => {
   return (
     <button
