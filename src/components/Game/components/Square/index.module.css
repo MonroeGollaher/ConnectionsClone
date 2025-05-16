@@ -5,6 +5,10 @@ input[type="checkbox"] {
   pointer-events: none;
 }
 
+label {
+  border-radius: 6px;
+}
+
 label.visually-hidden {
   display: flex;
   align-items: center;
@@ -37,5 +41,17 @@ input[type="checkbox"]:checked + label.visually-hidden::before {
 
 label.visually-hidden:active {
   transform: scale(0.95);
-  transition: transform 0.2s ease, background-color 0.3s ease;
+  transition:
+    transform 0.2s ease,
+    background-color 0.3s ease;
+}
+
+.selected {
+  color: #f8f8f8;
+  background-color: #5a594e;
+}
+
+.disabled {
+  cursor: default;
+  opacity: 0.6;
 }

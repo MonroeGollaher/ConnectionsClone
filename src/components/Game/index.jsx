@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { decrementMistake, resetGame } from "./index.slice";
+import { decrementMistake } from "./index.slice";
 import { Square } from "./components/Square";
 import styles from "./index.module.css";
-import classNames from "classnames";
 import { MistakesRemaining } from "./components/MistakesRemaining";
 import { Button } from "../Button";
 
 export const Game = () => {
   const dispatch = useDispatch();
   const [shuffledWords, setShuffledWords] = useState([]);
+  const [selectedWords, setSelectedWords] = useState([]);
   const { mistakesRemaining, isGameOver, wordGroups } = useSelector(
     (state) => state.game
   );
@@ -20,6 +20,13 @@ export const Game = () => {
     setShuffledWords(shuffled);
   }, [wordGroups]);
 
+  useEffect(() => {
+    if (mistakesRemaining === 0) {
+      setSelectedWords([]);
+      window.alert("Better luck next time!");
+    }
+  }, [mistakesRemaining]);
+
   const handleMistake = () => {
     if (!isGameOver) {
       dispatch(decrementMistake());
@@ -27,21 +34,47 @@ export const Game = () => {
   };
 
   const handleShuffle = () => {
-    console.log("handleShuffle");
+    const reshuffled = [...shuffledWords].sort(() => Math.random() - 0.5);
+    setShuffledWords(reshuffled);
   };
 
   const handleDeselectAll = () => {
-    console.log("handleDeselectAll");
+    setSelectedWords([]);
   };
 
-  const handleWordSelection = (word, index) => {
-    console.log(`Clicked word: ${word}`);
+  const handleWordSelection = (word) => {
+    setSelectedWords((prevSelected) => {
+      if (prevSelected.includes(word)) {
+        // Remove the word
+        return prevSelected.filter((w) => w !== word);
+      } else if (prevSelected.length < 4) {
+        // Add the word
+        return [...prevSelected, word];
+      } else {
+        return prevSelected;
+      }
+    });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("handleSubmit");
+
+    const match = wordGroups.find((group) => {
+      const selectedSorted = [...selectedWords].sort().join(",");
+      const groupSorted = [...group.words].sort().join(",");
+      return selectedSorted === groupSorted;
+    });
+
+    if (match) {
+      console.log("✅ Correct group:", match.category, match.color);
+      setSelectedWords([]);
+    } else {
+      console.log("❌ Incorrect group");
+      handleMistake();
+    }
   };
+
+  console.log("mistakesRemaining", mistakesRemaining);
 
   return (
     <article className={styles.gameWrapper}>
@@ -53,6 +86,10 @@ export const Game = () => {
               word={word}
               index={index}
               onClick={handleWordSelection}
+              isSelected={selectedWords.includes(word)}
+              isDisabled={
+                selectedWords.length === 4 && !selectedWords.includes(word)
+              }
             />
           ))}
         </div>
@@ -76,6 +113,7 @@ export const Game = () => {
           buttonText="Submit"
           type="submit"
           form="gameForm"
+          disabled={selectedWords.length < 4}
         />
       </section>
     </article>
