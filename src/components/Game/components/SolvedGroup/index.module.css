@@ -1,0 +1,48 @@
+.solvedGroup {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border-left: 6px solid;
+  background-color: #f9f9f9;
+}
+
+.categoryTitle {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.wordRow {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.solvedWord {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.25rem 0.75rem;
+  font-size: 1rem;
+}
+
+/* Optional group color classes */
+.yellowGroup {
+  border-color: #fadb14;
+  background-color: #fffbe6;
+}
+
+.greenGroup {
+  border-color: #52c41a;
+  background-color: #f6ffed;
+}
+
+.blueGroup {
+  border-color: #1890ff;
+  background-color: #e6f7ff;
+}
+
+.purpleGroup {
+  border-color: #9254de;
+  background-color: #f9f0ff;
+}

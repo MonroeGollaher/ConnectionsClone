@@ -5,11 +5,14 @@ import { Square } from "./components/Square";
 import styles from "./index.module.css";
 import { MistakesRemaining } from "./components/MistakesRemaining";
 import { Button } from "../Button";
+import { SolvedGroup } from "./components/SolvedGroup";
 
 export const Game = () => {
   const dispatch = useDispatch();
   const [shuffledWords, setShuffledWords] = useState([]);
   const [selectedWords, setSelectedWords] = useState([]);
+  const [solvedGroups, setSolvedGroups] = useState([]);
+
   const { mistakesRemaining, isGameOver, wordGroups } = useSelector(
     (state) => state.game
   );
@@ -66,19 +69,31 @@ export const Game = () => {
     });
 
     if (match) {
-      console.log("✅ Correct group:", match.category, match.color);
+      alert(`Correct group: ${match.category}`);
+      setSolvedGroups((prev) => [...prev, match]);
+
+      // ❗ Remove solved words from grid
+      setShuffledWords((prev) =>
+        prev.filter((word) => !selectedWords.includes(word))
+      );
+
       setSelectedWords([]);
     } else {
-      console.log("❌ Incorrect group");
       handleMistake();
     }
   };
 
-  console.log("mistakesRemaining", mistakesRemaining);
-
   return (
     <article className={styles.gameWrapper}>
       <form onSubmit={handleSubmit} id="gameForm">
+        {solvedGroups.map(({ category, groupName, words }, index) => (
+          <SolvedGroup
+            category={category}
+            groupName={groupName}
+            words={words}
+            key={index}
+          />
+        ))}
         <div className={styles.gameGrid}>
           {shuffledWords.map((word, index) => (
             <Square
