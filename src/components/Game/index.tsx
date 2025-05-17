@@ -2,20 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { decrementMistake } from "./index.slice";
 import { Square } from "./components/Square";
-import styles from "./index.module.css";
 import { MistakesRemaining } from "./components/MistakesRemaining";
-import { Button } from "../Button";
 import { SolvedGroup } from "./components/SolvedGroup";
+import { Button } from "../Button";
+import styles from "./index.module.css";
+import type { RootState, AppDispatch } from "../../store/store";
+import type { WordGroup } from "./index.slice";
 
-export const Game = () => {
-  const dispatch = useDispatch();
-  const [shuffledWords, setShuffledWords] = useState([]);
-  const [selectedWords, setSelectedWords] = useState([]);
-  const [solvedGroups, setSolvedGroups] = useState([]);
-
+export const Game: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { mistakesRemaining, isGameOver, wordGroups } = useSelector(
-    (state) => state.game
+    (state: RootState) => state.game
   );
+
+  const [shuffledWords, setShuffledWords] = useState<string[]>([]);
+  const [selectedWords, setSelectedWords] = useState<string[]>([]);
+  const [solvedGroups, setSolvedGroups] = useState<WordGroup[]>([]);
 
   useEffect(() => {
     const allWords = wordGroups.flatMap((group) => group.words);
@@ -45,13 +47,11 @@ export const Game = () => {
     setSelectedWords([]);
   };
 
-  const handleWordSelection = (word) => {
+  const handleWordSelection = (word: string) => {
     setSelectedWords((prevSelected) => {
       if (prevSelected.includes(word)) {
-        // Remove the word
         return prevSelected.filter((w) => w !== word);
       } else if (prevSelected.length < 4) {
-        // Add the word
         return [...prevSelected, word];
       } else {
         return prevSelected;
@@ -59,7 +59,7 @@ export const Game = () => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
     const match = wordGroups.find((group) => {
@@ -72,28 +72,34 @@ export const Game = () => {
       alert(`Correct group: ${match.category}`);
       setSolvedGroups((prev) => [...prev, match]);
 
-      // ❗ Remove solved words from grid
+      // Remove solved words from the grid
       setShuffledWords((prev) =>
         prev.filter((word) => !selectedWords.includes(word))
       );
 
       setSelectedWords([]);
     } else {
+      console.log("❌ Incorrect group");
       handleMistake();
     }
   };
 
   return (
     <article className={styles.gameWrapper}>
-      <form onSubmit={handleSubmit} id="gameForm">
+      {/* Solved Groups Display */}
+      <section className={styles.solvedGroups}>
         {solvedGroups.map(({ category, groupName, words }, index) => (
           <SolvedGroup
+            key={index}
             category={category}
             groupName={groupName}
             words={words}
-            key={index}
           />
         ))}
+      </section>
+
+      {/* Grid and Buttons */}
+      <form onSubmit={handleSubmit} id="gameForm">
         <div className={styles.gameGrid}>
           {shuffledWords.map((word, index) => (
             <Square
@@ -109,17 +115,19 @@ export const Game = () => {
           ))}
         </div>
       </form>
+
       <MistakesRemaining mistakesRemaining={mistakesRemaining} />
+
       <section className={styles.buttonWrapper}>
         <Button
           className={styles.button}
-          onClick={() => handleShuffle()}
+          onClick={handleShuffle}
           buttonText="Shuffle"
           type="button"
         />
         <Button
           className={styles.button}
-          onClick={() => handleDeselectAll()}
+          onClick={handleDeselectAll}
           buttonText="Deselect All"
           type="button"
         />

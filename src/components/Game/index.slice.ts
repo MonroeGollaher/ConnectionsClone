@@ -1,6 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+export interface WordGroup {
+  groupName: string;
+  category: string;
+  words: string[];
+}
+
+export interface GameState {
+  mistakesRemaining: number;
+  isGameOver: boolean;
+  wordGroups: WordGroup[];
+  shuffledWords: string[];
+  solvedGroups: WordGroup[];
+}
+
+const initialState: GameState = {
   mistakesRemaining: 4,
   isGameOver: false,
   wordGroups: [
@@ -38,9 +52,17 @@ const gameSlice = createSlice({
       if (state.mistakesRemaining === 0) {
         state.isGameOver = true;
       }
+    },
+    resetGame(): GameState {
+      const allWords = initialState.wordGroups.flatMap((group) => group.words);
+      const shuffled = allWords.sort(() => Math.random() - 0.5);
+      return {
+        ...initialState,
+        shuffledWords: shuffled
+      };
     }
   }
 });
 
-export const { decrementMistake } = gameSlice.actions;
+export const { decrementMistake, resetGame } = gameSlice.actions;
 export default gameSlice.reducer;
