@@ -64,5 +64,5 @@ const gameSlice = createSlice({
   }
 });
 
-export const { decrementMistake, resetGame } = gameSlice.actions;
+export const { decrementMistake } = gameSlice.actions;
 export default gameSlice.reducer;
