@@ -1,0 +1,53 @@
+.solvedGroup {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-block-end: 1rem;
+
+  & h3 {
+    margin-block: 0;
+  }
+}
+
+.categoryTitle {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-block-end: 0.5rem;
+}
+
+.wordRow {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  list-style: none;
+  margin-inline: auto;
+}
+
+.solvedWord {
+  font-size: 1rem;
+
+  &::after {
+    content: ",";
+  }
+
+  &:last-child::after {
+    content: "";
+  }
+}
+
+/* Optional group color classes */
+.yellowGroup {
+  background-color: #f9df6d;
+}
+
+.greenGroup {
+  background-color: #a0c35a;
+}
+
+.blueGroup {
+  background-color: #b0c4ef;
+}
+
+.purpleGroup {
+  background-color: #ba81c5;
+}

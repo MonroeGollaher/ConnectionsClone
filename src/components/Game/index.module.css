@@ -8,7 +8,7 @@ body {
 }
 
 .gameWrapper {
-  width: 80%;
+  /* width: 80%; */
   max-width: 600px;
   margin: auto;
   display: flex;

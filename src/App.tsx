@@ -1,13 +1,12 @@
 import React from "react";
-import "./App.css";
 import { Game } from "./components/Game";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
+    <main>
       <Game />
-    </div>
+    </main>
   );
-}
+};
 
 export default App;
